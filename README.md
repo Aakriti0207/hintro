@@ -1,154 +1,102 @@
 # Hintro Dashboard
-
-A production-quality frontend dashboard for Hintro — built with React, TypeScript, Tailwind CSS, Zustand, and Framer Motion.
-
+ 
+> This project was built as part of the frontend internship assignment given by Hintro (Amsom Technologies).
+ 
+A mock dashboard for Hintro built as part of a frontend assignment.
+ 
+🔗 **Live Demo:** https://hintro-aakriti.vercel.app
+ 
+---
+ 
+## What I built
+ 
+A responsive dashboard that shows call session data for two different users — one with no data (empty states) and one with active data. Everything is fetched live from the provided mock API.
+ 
+---
+ 
 ## Tech Stack
-
-- **React 18** + **Vite** — lightning-fast dev server & build
-- **TypeScript** — strict, fully typed
-- **Tailwind CSS** — utility-first, CSS variable theme system
-- **Zustand** — clean global state management
-- **Axios** — centralized API layer with request interceptors
-- **React Router DOM v6** — routing
-- **React Hot Toast** — elegant notifications
-- **Lucide React** — icon system
-- **Framer Motion** — smooth animations
-
-## Getting Started
-
-### Prerequisites
-- Node.js 18+
-- npm or pnpm
-
-### Installation
-
+ 
+| Tool | What it does |
+|------|-------------|
+| **React + Vite** | The main framework. Vite is just a faster alternative to Create React App |
+| **TypeScript** | JavaScript but with type safety — helps catch errors early |
+| **Tailwind CSS** | A CSS utility library — lets you style directly in the component |
+| **Zustand** | Manages shared state (like which user is selected) across the app |
+| **Axios** | Makes API calls — similar to fetch but a bit cleaner |
+| **Framer Motion** | Handles animations (modal slide-ins, transitions) |
+| **React Router DOM** | Handles navigation between pages |
+| **Lucide React** | Icon library |
+ 
+---
+ 
+## How to run locally
+ 
 ```bash
-# Clone or unzip the project
-cd hintro-dashboard
-
-# Install dependencies
+# 1. Clone the repo
+git clone https://github.com/Aakriti0207/hintro.git
+cd hintro
+ 
+# 2. Install dependencies
 npm install
-
-# Start development server
+ 
+# 3. Start the app
 npm run dev
 ```
-
-Open [http://localhost:5173](http://localhost:5173)
-
-### Build for Production
-
-```bash
-npm run build
-npm run preview
-```
-
+ 
+Open http://localhost:5173 in your browser.
+ 
 ---
-
+ 
+## Features
+ 
+- **Two users** — toggle between User 1 (empty) and User 2 (active) using the switcher
+- **Live API data** — all stats and call history fetched from the mock backend
+- **Stat cards** — Total Sessions, Average Duration, AI Used, Last Session
+- **Time formatting** — API gives seconds, dashboard shows "36m 51s" or "2 days ago"
+- **Recent calls** — grouped by date, with participant info
+- **Empty states** — shown for User 1 where there's no data
+- **Logout flow** — dropdown → confirmation modal
+- **Feedback** — submit feedback from the sidebar, stored in browser's localStorage
+- **Responsive** — works on mobile too (hamburger menu, collapsible sidebar)
+- **Skeleton loaders** — shown while data is loading
+---
+ 
 ## Project Structure
-
+ 
 ```
 src/
-├── api/              # Axios instance + API call functions
-├── components/
-│   ├── layout/       # Sidebar, Topbar
-│   ├── dashboard/    # StatCard, StatsGrid, RecentCalls, CallSessionRow, WelcomeSection, EmptyCalls
-│   ├── common/       # LogoutModal, UserSwitcher
-│   ├── feedback/     # FeedbackModal, FeedbackHistoryModal
-│   └── ui/           # Skeleton, Avatar, Button, Modal (primitives)
-├── pages/            # DashboardPage
-├── hooks/            # useDashboardData (data fetching)
-├── store/            # Zustand store (global state)
-├── utils/            # formatDuration, formatRelativeDate, groupSessionsByDate, etc.
-├── types/            # TypeScript interfaces
-├── constants/        # API base URL, nav items, avatar colors
-├── layouts/          # MainLayout
-└── styles/           # globals.css (CSS variable theme system)
+├── api/           → functions that call the backend
+├── components/    → all UI pieces (sidebar, stat cards, modals, etc.)
+├── hooks/         → custom hook that fetches dashboard data
+├── store/         → Zustand store (tracks current user globally)
+├── utils/         → helper functions (format time, group calls by date)
+├── types/         → TypeScript type definitions
+├── constants/     → API URL, nav links
+└── styles/        → global CSS with CSS variables (no hardcoded colors)
 ```
-
+ 
 ---
-
-## Features
-
-### 👥 Dual User Mode
-- **u1** — new user: empty states everywhere (no calls, zero stats)
-- **u2** — active user: populated data, randomized call sessions & stats
-- Switch via the **DEV toggle** (bottom-right corner)
-- Selected user stored in `localStorage`
-
-### 📊 Dashboard
-- Welcome section with user's first name from API
-- 4 stat cards: Total Sessions, Average Duration, AI Used, Last Session
-- Recent calls grouped by date with time formatting
-- Three-dot context menu on each call row
-
-### ⏱ Time Formatting
-- `2211s → 36m 51s`
-- `8000s → 2h 13m`
-- Last session → `"2 days ago"`, `"Just now"`, etc.
-
-### 💬 Feedback System
-- Submit feedback with star rating + message
-- Stored in `localStorage`
-- View full feedback history
-- Accessible via sidebar
-
-### 🔒 Logout Flow
-- Profile dropdown in topbar
-- Confirmation modal with cancel/confirm
-- Smooth animations
-
-### 📱 Fully Responsive
-- Desktop: fixed sidebar + topbar
-- Mobile: slide-in drawer with hamburger menu + overlay backdrop
-- Adaptive stat grid (2 cols mobile → 4 cols desktop)
-- Touch-friendly interactions
-
-### 🎨 Theme System
-- All colors via CSS custom properties — zero hardcoded values
-- Consistent spacing, radius, shadow variables
-- DM Sans + Sora font pairing
-
-### ⚡ Loading States
-- Skeleton loaders for stat cards, call history, profile
-- Smooth entrance animations on data load
-
-### ❌ Empty States
-- Beautiful illustrated empty state for no calls
-- Error fallback UI for failed API requests
-
----
-
-## API Integration
-
+ 
+## API Used
+ 
 Base URL: `https://mock-backend-hintro.vercel.app`
-
-| Endpoint | Description |
-|---|---|
-| `GET /api/auth/profile` | User profile |
-| `GET /api/auth/dashboard` | Dashboard + subscription + usage |
-| `GET /api/call-sessions/stats` | Call statistics |
-| `GET /api/call-sessions?limit=10` | Recent call sessions |
-
-All requests automatically include `x-user-id: u1 | u2` header via Axios interceptor.
-
+ 
+All requests send `x-user-id: u1` or `x-user-id: u2` in the header.
+ 
+| Endpoint | Returns |
+|----------|---------|
+| `GET /api/auth/profile` | User's name, email, status |
+| `GET /api/call-sessions/stats` | Total sessions, average duration, AI interactions |
+| `GET /api/call-sessions?limit=10` | List of recent calls |
+ 
 ---
-
-## Conventions & Assumptions
-
-- **No auth flow** — assignment focuses on dashboard UI; auth is mocked
-- **Single route** — `/` renders the dashboard; other nav items show coming-soon placeholder
-- **localStorage keys**: `hintro_user_id`, `hintro_feedback`
-- **Feedback** stored locally; no backend persistence
-- Avatar colors are deterministic (based on first character of name)
-- All time values from API are in seconds
-- `lastSession` array — most recent date is used for "X days ago" display
-
----
-
-## Scripts
-
-| Script | Description |
-|---|---|
-| `npm run dev` | Start dev server |
-| `npm run build` | TypeScript check + Vite build |
-| `npm run preview` | Preview production build |
+ 
+## Notes & Assumptions
+ 
+- `u1` = new user with no data (shows empty states)
+- `u2` = active user with randomized data (changes on every API call)
+- Duration from API is in **seconds** — converted to `Xm Ys` for display
+- `lastSession` is an array — only the most recent date is shown
+- Feedback is saved in `localStorage` (key: `hintro_feedback`) — no backend
+- The selected user is also saved in `localStorage` so it persists on refresh
+- Nav items other than Dashboard don't have pages — only Dashboard was in scope
