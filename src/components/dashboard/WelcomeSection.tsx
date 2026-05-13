@@ -32,9 +32,15 @@ export const WelcomeSection: React.FC = () => {
       </div>
 
       <Button
-        variant="primary"
+        variant="ghost"
         size="sm"
-        className="bg-[#28282b] hover:bg-[#4F46E5]"
+        className="
+          !bg-[#0F172A]
+          hover:!bg-[#111827]
+          !text-white
+          rounded-[6px]
+          px-4
+        "
         aria-label="Start a new call"
       >
         Start New Call
